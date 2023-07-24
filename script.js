@@ -101,8 +101,9 @@ function game(){
         console.log("You lost! LMAO!");
     }
     else{
-        console.log("It's a draw");
+        console.log("It's a draw :(");
     }
+
 }
 
 game();
