@@ -19,25 +19,22 @@ function getPlayerChoice(){
     
 }
 
-computerChoice = getComputerChoice();
-playerChoice = getPlayerChoice();
-
 function playRound(playerChoice, computerChoice){
     let text;
     if (playerChoice == "rock"){
         if (computerChoice == "paper"){
             text = `You lost! ${playerChoice} loses to ${computerChoice}`;
-            console.log(text);
+            return "lose";
         }
 
         if (computerChoice == "rock"){
             text = `Draw ${playerChoice} draws ${computerChoice}`;
-            console.log(text);
+            return "draw";
         }
 
         if (computerChoice == "scissors"){
             text = `You Win! ${playerChoice} beats ${computerChoice}`;
-            console.log(text);
+            return "win";
         }
 
     }
@@ -45,17 +42,17 @@ function playRound(playerChoice, computerChoice){
     if (playerChoice == "paper"){
         if (computerChoice == "scissors"){
             text = `You lost! ${playerChoice} loses to ${computerChoice}`;
-            console.log(text);
+            return "lose";
         }
 
         if (computerChoice == "paper"){
             text = `Draw ${playerChoice} draws ${computerChoice}`;
-            console.log(text);
+            return "draw";
         }
 
         if (computerChoice == "rock"){
             text = `You Win! ${playerChoice} beats ${computerChoice}`;
-            console.log(text);
+            return "win";
         }
 
     }
@@ -63,26 +60,49 @@ function playRound(playerChoice, computerChoice){
     if (playerChoice == "scissors"){
         if (computerChoice == "rock"){
             text = `You lost! ${playerChoice} loses to ${computerChoice}`;
-            console.log(text);
+            return "lose";
         }
 
         if (computerChoice == "scissors"){
             text = `Draw ${playerChoice} draws ${computerChoice}`;
-            console.log(text);
+            return "draw";
         }
 
         if (computerChoice == "paper"){
             text = `You Win! ${playerChoice} beats ${computerChoice}`;
-            console.log(text);
+            return "win";
         }
 
     }
 
-
-    
-    
 }
 
-playRound(playerChoice, computerChoice);
+function game(){
+    let wins = 0;
+    let loses = 0;
 
+    for(let x = 0; x < 5; x++){
+        computerChoice = getComputerChoice();
+        playerChoice = getPlayerChoice();
 
+        outcome = playRound(playerChoice, computerChoice);
+        if(outcome == "win"){
+            wins++;
+        }
+        if(outcome == "lose"){
+            loses++;
+        }
+    }
+
+    if(wins > loses){
+        console.log("Congradulaitons! you won!");
+    }
+    else if(loses > wins){
+        console.log("You lost! LMAO!");
+    }
+    else{
+        console.log("It's a draw");
+    }
+}
+
+game();
