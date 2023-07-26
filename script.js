@@ -1,108 +1,84 @@
-function getComputerChoice(){
-    let x = Math.floor(Math.random() * 3);
-    if (x == 0) {
-        return "rock";
-    }
-    if (x == 1) {
-        return "paper";
-    }
-    else{
-        return "scissors";
-    }
-}
+const buttons = document.querySelectorAll('button');
+let loses = 0;
+let wins = 0;
 
-function getPlayerChoice(){
-    let choice = prompt("Pick rock, paper or scissors");
-    choice = choice.toLowerCase();
-    console.log(choice);
-    return choice;
-    
-}
 
-function playRound(playerChoice, computerChoice){
-    let text;
-    if (playerChoice == "rock"){
-        if (computerChoice == "paper"){
-            text = `You lost! ${playerChoice} loses to ${computerChoice}`;
-            return "lose";
-        }
+buttons.forEach((button) => {
 
-        if (computerChoice == "rock"){
-            text = `Draw ${playerChoice} draws ${computerChoice}`;
+  button.addEventListener('click', function(e){
+    let playerChoice = e.target.textContent;
+    let outcome = playRound(playerChoice);
+    if(outcome == "win"){
+        wins++;
+    }
+    if(outcome == "lose"){
+        loses++;
+    }
+
+    if(wins == 5 || loses == 5){
+        winner(wins, loses);
+    }
+
+  });
+});
+
+function playRound(playerChoice){
+
+    playerChoice = playerChoice.toLowerCase();
+    const choices = ['rock', 'paper', 'scissors'];
+
+    let randomIndex = Math.floor(Math.random() * choices.length);
+    let computerChoice = choices[randomIndex];
+
+    if(playerChoice == "rock"){
+        if(computerChoice == "rock"){
             return "draw";
         }
-
-        if (computerChoice == "scissors"){
-            text = `You Win! ${playerChoice} beats ${computerChoice}`;
+        if(computerChoice == "scissors"){
             return "win";
         }
-
-    }
-
-    if (playerChoice == "paper"){
-        if (computerChoice == "scissors"){
-            text = `You lost! ${playerChoice} loses to ${computerChoice}`;
+        if(computerChoice == "paper"){
             return "lose";
         }
-
-        if (computerChoice == "paper"){
-            text = `Draw ${playerChoice} draws ${computerChoice}`;
-            return "draw";
-        }
-
-        if (computerChoice == "rock"){
-            text = `You Win! ${playerChoice} beats ${computerChoice}`;
-            return "win";
-        }
-
     }
 
-    if (playerChoice == "scissors"){
-        if (computerChoice == "rock"){
-            text = `You lost! ${playerChoice} loses to ${computerChoice}`;
+    if(playerChoice == "paper"){
+        if(computerChoice == "paper"){
+            return "draw";
+        }
+        if(computerChoice == "rock"){
+            return "win";
+        }
+        if(computerChoice == "scissors"){
             return "lose";
         }
+    }
 
-        if (computerChoice == "scissors"){
-            text = `Draw ${playerChoice} draws ${computerChoice}`;
+    if(playerChoice == "scissors"){
+        if(computerChoice == "scissors"){
             return "draw";
         }
-
-        if (computerChoice == "paper"){
-            text = `You Win! ${playerChoice} beats ${computerChoice}`;
+        if(computerChoice == "paper"){
             return "win";
         }
-
+        if(computerChoice == "rock"){
+            return "lose";
+        }
     }
+
 
 }
 
-function game(){
-    let wins = 0;
-    let loses = 0;
-
-    for(let x = 0; x < 5; x++){
-        computerChoice = getComputerChoice();
-        playerChoice = getPlayerChoice();
-
-        outcome = playRound(playerChoice, computerChoice);
-        if(outcome == "win"){
-            wins++;
-        }
-        if(outcome == "lose"){
-            loses++;
-        }
+function winner(wins, loses){
+    const body = document.body;
+    let paragraph = document.createElement('p');
+    paragraph.style.color = "white";
+    if(loses == 5){
+        paragraph.textContent = "You lost lmao";
     }
-
-    if(wins > loses){
-        console.log("Congradulaitons! you won!");
+    else if(wins == 5){
+        paragraph.textContent = "you win!";
     }
-    else if(loses > wins){
-        console.log("You lost! LMAO!");
-    }
-    else{
-        console.log("It's a draw");
-    }
+    body.append(paragraph);
 }
 
-game();
